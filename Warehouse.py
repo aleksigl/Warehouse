@@ -63,15 +63,13 @@ def sell_item(item_sold, quantity_sold):
                 element['quantity'] = element['quantity'] - int(quantity_sold)
                 print(f"{quantity_sold} {element['unit']} of {item_sold} sold.\nHere's current warehouse status:")
                 get_items()
-                sold_element = {}
-                sold_element += {
+                sold_element = {
                     "name": element['name'],
                     "quantity": quantity_sold,
-                    "unit": element['quantity'],
+                    "unit": element['unit'],
                     "unit_price": element['unit_price']
                 }
                 sold_items.append(sold_element)
-                print(sold_items)
             else:
                 print(f"There's not enough {item_sold} to sell.")
     if item_found is False:
@@ -87,6 +85,7 @@ def show_revenue():
     print("Revenue breakdown (PLN)")
     revenue_count = get_income() - get_costs()
     print(f"Income: {get_income()} \nCosts: {get_costs()} \nRevenue: {revenue_count}")
+
 
 def export_items_to_csv():
     import csv
@@ -124,6 +123,23 @@ def export_sales_to_csv():
         print("Your sold items have been successfully exported to sprzedaz.csv.")
 
 
+def load_items_from_csv(items_list):
+    items_list.clear()
+    import csv
+    with open('magazyn.csv', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            items_list.append(
+                {
+                "name": row['name'],
+                "quantity": int(row['quantity']),
+                "unit": row['unit'],
+                "unit_price": float(row['unit_price'])
+                }
+            )
+    print("Items have been successfully loaded from magazyn.csv.")
+
+
 welcome = input("What would you like to do?")
 while welcome != "exit":
     if welcome == "show":
@@ -139,6 +155,8 @@ while welcome != "exit":
     elif welcome == "save":
         export_items_to_csv()
         export_sales_to_csv()
+    elif welcome == "load":
+        load_items_from_csv(items)
     else:
         print("This is not a valid input.")
     welcome = input("What would you like to do?")
