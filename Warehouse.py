@@ -46,7 +46,7 @@ def sell_item(item_sold, quantity_sold):
             item_found = True
             if int(quantity_sold) <= element['quantity']:
                 element['quantity'] = element['quantity'] - int(quantity_sold)
-                print("Item sold.\nHere's current warehouse status:")
+                print(f"{quantity_sold} {element['unit']} of {item_sold} sold.\nHere's current warehouse status:")
                 get_items()
             else:
                 print(f"There's not enough {item_sold} to sell.")
