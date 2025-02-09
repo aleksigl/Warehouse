@@ -10,12 +10,14 @@ for i in range(len(names)):
 
 
 def get_items():
-    print("\tName \t\t Quantity \t\t Unit \t\t Unit price (PLN)")
+    print("\t\tName \t\t\t Quantity \t\t  Unit \t\t Unit price (PLN)")
     print("-" * 84)
     for element in items:
-        item_details = (
-            f"{element['name'].center(20)}\t{str('{:03d}'.format(element['quantity']).center(10))}\t\t{element['unit'].center(7)}\t\t{str('{:.2f}'.format(element['unit_price']).center(15))}")
-        print(item_details)
+        name_string = element['name'].center(20)
+        quantity_string = str('{:03d}'.format(element['quantity']).center(10))
+        unit_string = element['unit'].center(7)
+        unit_price_string = str('{:.2f}'.format(element['unit_price']).center(15))
+        print(f"{name_string}\t{quantity_string}\t\t{unit_string}\t\t{unit_price_string}")
 
 
 def add_item():
@@ -37,12 +39,32 @@ def add_item():
         break
 
 
+def sell_item(item_sold, quantity_sold):
+    item_found = False
+    for element in items:
+        if item_sold == element['name']:
+            item_found = True
+            if int(quantity_sold) <= element['quantity']:
+                element['quantity'] = element['quantity'] - int(quantity_sold)
+                print("Item sold.\nHere's current warehouse status:")
+                get_items()
+            else:
+                print(f"There's not enough {item_sold} to sell.")
+    if item_found is False:
+        print("Such item is not available in the warehouse.")
+
+
+
 welcome = input("What would you like to do?")
 while welcome != "exit":
     if welcome == "show":
         get_items()
     elif welcome == "add":
         add_item()
+    elif welcome == "sell":
+        item_sold = (input("What would you like to sell? "))
+        quantity_sold = (input(f"How many pieces of {item_sold} would you like to sell? "))
+        sell_item(item_sold, quantity_sold)
     else:
         print("This is not a valid input.")
     welcome = input("What would you like to do?")
