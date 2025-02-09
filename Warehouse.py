@@ -88,6 +88,41 @@ def show_revenue():
     revenue_count = get_income() - get_costs()
     print(f"Income: {get_income()} \nCosts: {get_costs()} \nRevenue: {revenue_count}")
 
+def export_items_to_csv():
+    import csv
+    with open('magazyn.csv', 'w', newline='') as csvfile:
+        fieldnames = ['name', 'quantity', 'unit', 'unit_price']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for element in items:
+            writer.writerow(
+                {
+                    "name": element['name'],
+                    "quantity": element['quantity'],
+                    "unit": element['unit'],
+                    "unit_price": element['unit_price']
+                }
+            )
+        print("Your warehouse stock has been successfully exported to magazyn.csv.")
+
+
+def export_sales_to_csv():
+    import csv
+    with open('sprzedaz.csv', 'w', newline='') as csvfile:
+        fieldnames = ['name', 'quantity', 'unit', 'unit_price']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for element in sold_items:
+            writer.writerow(
+                {
+                    "name": element['name'],
+                    "quantity": element['quantity'],
+                    "unit": element['unit'],
+                    "unit_price": element['unit_price']
+                }
+            )
+        print("Your sold items have been successfully exported to sprzedaz.csv.")
+
 
 welcome = input("What would you like to do?")
 while welcome != "exit":
@@ -101,6 +136,9 @@ while welcome != "exit":
         sell_item(item_sold, quantity_sold)
     elif welcome == "show_revenue":
         show_revenue()
+    elif welcome == "save":
+        export_items_to_csv()
+        export_sales_to_csv()
     else:
         print("This is not a valid input.")
     welcome = input("What would you like to do?")
