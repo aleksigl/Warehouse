@@ -7,7 +7,14 @@ units = ["pcs", "pcs", "pcs"]
 units_price = [22.5, 49.99, 250]
 
 for i in range(len(names)):
-    items += [{"name": names[i], "quantity": quantities[i], "unit": units[i], "unit_price": units_price[i]}]
+    items += [
+        {
+            "name": names[i],
+            "quantity": quantities[i],
+            "unit": units[i],
+            "unit_price": units_price[i]
+        }
+    ]
 
 
 def get_items():
@@ -25,15 +32,17 @@ def add_item():
     print("Adding new item...")
     while True:
         add_item_name = str(input("Enter product's name: "))
-        element = {}
         if add_item_name.lower() == "quit":
             print("You have quit.")
             break
-        element["name"] = add_item_name
-        element["quantity"] = int(input("Enter product's quantity: "))
-        element["unit"] = str(input("Enter unit's type: "))
-        element["unit_price"] = float(input("Enter product's price per unit: "))
-        items.append(element)
+        items.append(
+            {
+                "name": add_item_name,
+                "quantity": int(input("Enter product's quantity: ")),
+                "unit": str(input("Enter unit's type: ")),
+                "unit_price": float(input("Enter product's price per unit: "))
+            }
+        )
         print()
         print("You have successfully added a new product to the warehouse stock.\nHere's current status:")
         get_items()
@@ -55,8 +64,12 @@ def sell_item(item_sold, quantity_sold):
                 print(f"{quantity_sold} {element['unit']} of {item_sold} sold.\nHere's current warehouse status:")
                 get_items()
                 sold_element = {}
-                sold_element += {"name": element['name'], "quantity": quantity_sold, "unit": element['quantity'],
-                                 "unit_price": element['unit_price']}
+                sold_element += {
+                    "name": element['name'],
+                    "quantity": quantity_sold,
+                    "unit": element['quantity'],
+                    "unit_price": element['unit_price']
+                }
                 sold_items.append(sold_element)
                 print(sold_items)
             else:
@@ -82,12 +95,12 @@ while welcome != "exit":
         get_items()
     elif welcome == "add":
         add_item()
-    elif welcome == "show_revenue":
-        show_revenue()
     elif welcome == "sell":
         item_sold = (input("What would you like to sell? "))
         quantity_sold = (input(f"How many pieces of {item_sold} would you like to sell? "))
         sell_item(item_sold, quantity_sold)
+    elif welcome == "show_revenue":
+        show_revenue()
     else:
         print("This is not a valid input.")
     welcome = input("What would you like to do?")
