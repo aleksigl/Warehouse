@@ -1,4 +1,5 @@
 items = []
+sold_items = []
 
 names = ["mini pump", "patch kit", "saddle bag"]
 quantities = [359, 777, 54]
@@ -39,6 +40,11 @@ def add_item():
         break
 
 
+def get_costs():
+    warehouse_value_total = sum([element['quantity'] * element['unit_price'] for element in items])
+    return round(warehouse_value_total, 2)
+
+
 def sell_item(item_sold, quantity_sold):
     item_found = False
     for element in items:
@@ -48,11 +54,26 @@ def sell_item(item_sold, quantity_sold):
                 element['quantity'] = element['quantity'] - int(quantity_sold)
                 print(f"{quantity_sold} {element['unit']} of {item_sold} sold.\nHere's current warehouse status:")
                 get_items()
+                sold_element = {}
+                sold_element += {"name": element['name'], "quantity": quantity_sold, "unit": element['quantity'],
+                                 "unit_price": element['unit_price']}
+                sold_items.append(sold_element)
+                print(sold_items)
             else:
                 print(f"There's not enough {item_sold} to sell.")
     if item_found is False:
         print("Such item is not available in the warehouse.")
 
+
+def get_income():
+    income_value_total = sum([element['quantity'] * element['unit_price'] for element in sold_items])
+    return round(income_value_total, 2)
+
+
+def show_revenue():
+    print("Revenue breakdown (PLN)")
+    revenue_count = get_income() - get_costs()
+    print(f"Income: {get_income()} \nCosts: {get_costs()} \nRevenue: {revenue_count}")
 
 
 welcome = input("What would you like to do?")
@@ -61,6 +82,8 @@ while welcome != "exit":
         get_items()
     elif welcome == "add":
         add_item()
+    elif welcome == "show_revenue":
+        show_revenue()
     elif welcome == "sell":
         item_sold = (input("What would you like to sell? "))
         quantity_sold = (input(f"How many pieces of {item_sold} would you like to sell? "))
