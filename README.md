@@ -1,4 +1,3 @@
-"""
 # Warehouse Management System
 
 This script allows you to manage a warehouse by keeping track of items, quantities, prices, and sales transactions.
@@ -39,4 +38,3 @@ The system includes functionality to:
 # Note:
 - The `load_items_from_csv` function reads items from a CSV file, where the file contains columns for item name, quantity, unit, and unit price.
 - All monetary values (e.g., unit prices and costs) are represented in PLN (Polish Zloty).
-"""
