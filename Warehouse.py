@@ -81,7 +81,7 @@ def get_income():
     return round(income_value_total, 2)
 
 
-def show_revenue():
+def show_profit():
     print("Revenue breakdown (PLN)")
     profit_count = get_income() - get_costs()
     print(f"Income: {get_income()} \nCosts: {get_costs()} \nProfit: {profit_count}")
@@ -165,7 +165,7 @@ def main():
             quantity_sold = (input(f"How many pieces of {item_sold} would you like to sell? "))
             sell_item(item_sold, quantity_sold)
         elif welcome == "show_revenue":
-            show_revenue()
+            show_profit()
         elif welcome == "save":
             export_items_to_csv()
             export_sales_to_csv()
