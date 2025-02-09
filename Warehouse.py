@@ -44,7 +44,7 @@ def add_item():
             }
         )
         print()
-        print(f"You have successfully added {add_item_name} to the warehouse stock.\nHere's current status:")
+        print(f"\nYou have successfully added {add_item_name} to the warehouse stock.\nHere's current status:")
         get_items()
         break
 
@@ -83,8 +83,8 @@ def get_income():
 
 def show_revenue():
     print("Revenue breakdown (PLN)")
-    revenue_count = get_income() - get_costs()
-    print(f"Income: {get_income()} \nCosts: {get_costs()} \nRevenue: {revenue_count}")
+    profit_count = get_income() - get_costs()
+    print(f"Income: {get_income()} \nCosts: {get_costs()} \nProfit: {profit_count}")
 
 
 def export_items_to_csv():
@@ -137,7 +137,7 @@ def load_items_from_csv(file_path, items_list):
                     "unit_price": float(row['unit_price'])
                 }
             )
-    print("Items have been successfully loaded from {file_path}.")
+    print(f"Items have been successfully loaded from {file_path}.")
 
 
 import sys
@@ -154,7 +154,7 @@ def main():
         prior_welcome_import(file_path)
     else:
         print("No file path provided. Proceeding without loading data.")
-    welcome = input("Available actions: exit, show, add, sell, show_revenue, save, load.\nWhat would you like to do? ")
+    welcome = input("\nAvailable actions: exit, show, add, sell, show_revenue, save, load.\nWhat would you like to do? ")
     while welcome != "exit":
         if welcome == "show":
             get_items()
@@ -173,7 +173,7 @@ def main():
             load_items_from_csv('magazyn.csv', items)
         else:
             print("This is not a valid input.")
-        welcome = input("Available actions: exit, show, add, sell, show_revenue, save, load.\nWhat would you like to do? ")
+        welcome = input("\nAvailable actions: exit, show, add, sell, show_revenue, save, load.\nWhat would you like to do? ")
     print("Exiting! Bye...!")
 
 
