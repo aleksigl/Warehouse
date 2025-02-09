@@ -16,7 +16,7 @@ The system includes functionality to:
 - get_costs(): Calculates and returns the total cost of the current stock based on quantity and unit price.
 - sell_item(item_sold, quantity_sold): Reduces the stock of an item based on the quantity sold and records the transaction.
 - get_income(): Calculates and returns the total income generated from the sales of items.
-- show_revenue(): Displays the income, costs, and overall revenue (income - costs).
+- show_profit(): Displays the income, costs, and overall profit (income - costs).
 - export_items_to_csv(): Exports the current list of items to a CSV file for backup.
 - export_sales_to_csv(): Exports the list of sold items to a CSV file for backup.
 - load_items_from_csv(file_path, items_list): Loads items from a CSV file to restore the warehouse stock.
