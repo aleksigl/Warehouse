@@ -29,7 +29,7 @@ def get_items():
 
 
 def add_item():
-    print("Adding new item...")
+    print("Adding new item initiated.")
     while True:
         add_item_name = str(input("Enter product's name: "))
         if add_item_name.lower() == "quit":
@@ -39,12 +39,12 @@ def add_item():
             {
                 "name": add_item_name,
                 "quantity": int(input("Enter product's quantity: ")),
-                "unit": str(input("Enter unit's type: ")),
+                "unit": str(input("Enter unit's type (eg. kg, pcs): ")),
                 "unit_price": float(input("Enter product's price per unit: "))
             }
         )
         print()
-        print("You have successfully added a new product to the warehouse stock.\nHere's current status:")
+        print(f"You have successfully added {add_item_name} to the warehouse stock.\nHere's current status:")
         get_items()
         break
 
@@ -123,41 +123,59 @@ def export_sales_to_csv():
         print("Your sold items have been successfully exported to sprzedaz.csv.")
 
 
-def load_items_from_csv(items_list):
+def load_items_from_csv(file_path, items_list):
     items_list.clear()
     import csv
-    with open('magazyn.csv', newline='') as csvfile:
+    with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             items_list.append(
                 {
-                "name": row['name'],
-                "quantity": int(row['quantity']),
-                "unit": row['unit'],
-                "unit_price": float(row['unit_price'])
+                    "name": row['name'],
+                    "quantity": int(row['quantity']),
+                    "unit": row['unit'],
+                    "unit_price": float(row['unit_price'])
                 }
             )
-    print("Items have been successfully loaded from magazyn.csv.")
+    print("Items have been successfully loaded from {file_path}.")
 
 
-welcome = input("What would you like to do?")
-while welcome != "exit":
-    if welcome == "show":
-        get_items()
-    elif welcome == "add":
-        add_item()
-    elif welcome == "sell":
-        item_sold = (input("What would you like to sell? "))
-        quantity_sold = (input(f"How many pieces of {item_sold} would you like to sell? "))
-        sell_item(item_sold, quantity_sold)
-    elif welcome == "show_revenue":
-        show_revenue()
-    elif welcome == "save":
-        export_items_to_csv()
-        export_sales_to_csv()
-    elif welcome == "load":
-        load_items_from_csv(items)
+import sys
+
+
+def prior_welcome_import(file_path):
+    load_items_from_csv(file_path, items)
+    print("Successfully loaded data from %s." % (file_path))
+
+
+def main():
+    if len(sys.argv) > 1:
+        file_path = sys.argv[1]
+        prior_welcome_import(file_path)
     else:
-        print("This is not a valid input.")
-    welcome = input("What would you like to do?")
-print("Exiting! Bye...!")
+        print("No file path provided. Proceeding without loading data.")
+    welcome = input("Available actions: exit, show, add, sell, show_revenue, save, load.\nWhat would you like to do? ")
+    while welcome != "exit":
+        if welcome == "show":
+            get_items()
+        elif welcome == "add":
+            add_item()
+        elif welcome == "sell":
+            item_sold = (input("What would you like to sell? "))
+            quantity_sold = (input(f"How many pieces of {item_sold} would you like to sell? "))
+            sell_item(item_sold, quantity_sold)
+        elif welcome == "show_revenue":
+            show_revenue()
+        elif welcome == "save":
+            export_items_to_csv()
+            export_sales_to_csv()
+        elif welcome == "load":
+            load_items_from_csv('magazyn.csv', items)
+        else:
+            print("This is not a valid input.")
+        welcome = input("Available actions: exit, show, add, sell, show_revenue, save, load.\nWhat would you like to do? ")
+    print("Exiting! Bye...!")
+
+
+if __name__ == "__main__":
+    main()

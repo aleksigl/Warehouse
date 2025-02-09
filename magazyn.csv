@@ -1,4 +1,5 @@
 name,quantity,unit,unit_price
 mini pump,359,pcs,22.5
 patch kit,772,pcs,49.99
-saddle bag,54,pcs,250
+saddle bag,32,pcs,250.0
+handlebar bag,156,pcs,109.0
